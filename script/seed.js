@@ -7,53 +7,52 @@ async function seed() {
   await db.sync({force: true})
   console.log('db synced!')
 
-  const sweater1 = await Product.create({
-    name: 'Christmas Sweater',
-    category: 'Sweater',
-    price: 100,
-    imageUrl:
-      'https://www.bowwowsbest.com/v/vspfiles/photos/DOD-57243-2.jpg?v-cache=1539333998',
-    productQuantity: 5,
-    inStock: true,
-    description: 'wonderful sweater for the festive seasons',
-    size: 'small'
-  })
-
-  const sweater2 = await Product.create({
-    name: 'Ugly Sweater',
-    category: 'Sweater',
-    price: 150,
-    imageUrl:
-      'https://cdn.shopify.com/s/files/1/0512/7721/products/Red_Hearts_1024x1024.jpg?v=1602266507',
-    productQuantity: 10,
-    inStock: true,
-    description: 'the ugliest of sweaters for ',
-    size: 'large'
-  })
-
-  const dress1 = await Product.create({
-    name: 'Birthday Dress',
-    category: 'Dresses',
-    price: 200,
-    imageUrl:
-      'https://s7d2.scene7.com/is/image/PetSmart/5294347?$pdp-placeholder-desktop$',
-    productQuantity: 3,
-    inStock: true,
-    description: 'A wonderfur birthday dress for that special day',
-    size: 'xsmall'
-  })
-
-  const dress2 = await Product.create({
-    name: 'Formal Dress',
-    category: 'Dresses',
-    price: 300,
-    imageUrl:
-      'https://images-na.ssl-images-amazon.com/images/I/717Y3LiaoKL._AC_SL1200_.jpg',
-    productQuantity: 10,
-    inStock: true,
-    description: 'A elegant dress for those long walks at the park',
-    size: 'small'
-  })
+  const products = await Promise.all([
+    Product.create({
+      name: 'Christmas Sweater',
+      category: 'Sweater',
+      price: 100,
+      imageUrl:
+        'https://www.bowwowsbest.com/v/vspfiles/photos/DOD-57243-2.jpg?v-cache=1539333998',
+      productQuantity: 5,
+      inStock: true,
+      description: 'wonderful sweater for the festive seasons',
+      size: 'small'
+    }),
+    Product.create({
+      name: 'Ugly Sweater',
+      category: 'Sweater',
+      price: 150,
+      imageUrl:
+        'https://cdn.shopify.com/s/files/1/0512/7721/products/Red_Hearts_1024x1024.jpg?v=1602266507',
+      productQuantity: 10,
+      inStock: true,
+      description: 'the ugliest of sweaters for ',
+      size: 'large'
+    }),
+    Product.create({
+      name: 'Birthday Dress',
+      category: 'Dresses',
+      price: 200,
+      imageUrl:
+        'https://s7d2.scene7.com/is/image/PetSmart/5294347?$pdp-placeholder-desktop$',
+      productQuantity: 3,
+      inStock: true,
+      description: 'A wonderfur birthday dress for that special day',
+      size: 'xsmall'
+    }),
+    Product.create({
+      name: 'Formal Dress',
+      category: 'Dresses',
+      price: 300,
+      imageUrl:
+        'https://images-na.ssl-images-amazon.com/images/I/717Y3LiaoKL._AC_SL1200_.jpg',
+      productQuantity: 10,
+      inStock: true,
+      description: 'A elegant dress for those long walks at the park',
+      size: 'small'
+    })
+  ])
 
   const users = await Promise.all([
     User.create({
@@ -76,14 +75,15 @@ async function seed() {
     })
   ])
 
-
-  // console.log(`seeded ${users.length} users`)
-  console.log(`seeded successfully`)
-
   const cart = await Promise.all([
     Cart.create({productId: 1, userId: 5}),
     Cart.create({productId: 55, userId: 1234})
   ])
+
+  console.log(`seeded ${products.length} products`)
+  console.log(`seeded ${users.length} users`)
+  console.log(`seeded ${cart.length} cart`)
+  console.log(`seeded successfully`)
 }
 
 // We've separated the `seed` function from the `runSeed` function.

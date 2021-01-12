@@ -1,5 +1,6 @@
 const User = require('./user')
 const Cart = require('./cart')
+const Product = require('./product')
 
 /**
  * If we had any associations to make, this would be a great place to put them!
@@ -16,5 +17,6 @@ const Cart = require('./cart')
  */
 module.exports = {
   User,
-  Cart
+  Cart,
+  Product
 }
