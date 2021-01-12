@@ -11,8 +11,8 @@ const User = db.define('user', {
     type: Sequelize.STRING,
     unique: true,
     allowNull: false,
-    validate:{
-      isEmail: true,
+    validate: {
+      isEmail: true
     }
   },
   password: {
@@ -32,19 +32,16 @@ const User = db.define('user', {
     }
   },
   type: {
-    type: Sequelize.ENUM("Guest", "User", "Admin"),
-    allowNull:false
+    type: Sequelize.ENUM('Guest', 'User', 'Admin'),
+    allowNull: false
   },
   address: {
     type: Sequelize.STRING,
-    allowNull:false
+    allowNull: false
   },
   phone: {
-    type: Sequelize.INTEGER,
-    allowNull:false,
-    validate: {
-      len: [10,10]
-    },
+    type: Sequelize.STRING,
+    allowNull: false
   }
 })
 
