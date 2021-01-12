@@ -1,18 +1,67 @@
 'use strict'
 
-const db = require('../server/db')
-const {User} = require('../server/db/models')
+const db = require('../server/db/db')
+const Product = require('../server/db/models/product')
 
 async function seed() {
   await db.sync({force: true})
+
+  const sweater1 = await Product.create({
+    name: 'Christmas Sweater',
+    category: 'Sweater',
+    price: 100,
+    imageUrl:
+      'https://www.bowwowsbest.com/v/vspfiles/photos/DOD-57243-2.jpg?v-cache=1539333998',
+    productQuantity: 5,
+    inStock: true,
+    description: 'wonderful sweater for the festive seasons',
+    size: 'small'
+  })
+
+  const sweater2 = await Product.create({
+    name: 'Ugly Sweater',
+    category: 'Sweater',
+    price: 150,
+    imageUrl:
+      'https://cdn.shopify.com/s/files/1/0512/7721/products/Red_Hearts_1024x1024.jpg?v=1602266507',
+    productQuantity: 10,
+    inStock: true,
+    description: 'the ugliest of sweaters for ',
+    size: 'large'
+  })
+
+  const dress1 = await Product.create({
+    name: 'Birthday Dress',
+    category: 'Dresses',
+    price: 200,
+    imageUrl:
+      'https://s7d2.scene7.com/is/image/PetSmart/5294347?$pdp-placeholder-desktop$',
+    productQuantity: 3,
+    inStock: true,
+    description: 'A wonderfur birthday dress for that special day',
+    size: 'xsmall'
+  })
+
+  const dress2 = await Product.create({
+    name: 'Formal Dress',
+    category: 'Dresses',
+    price: 300,
+    imageUrl:
+      'https://images-na.ssl-images-amazon.com/images/I/717Y3LiaoKL._AC_SL1200_.jpg',
+    productQuantity: 10,
+    inStock: true,
+    description: 'A elegant dress for those long walks at the park',
+    size: 'small'
+  })
+
   console.log('db synced!')
 
-  const users = await Promise.all([
-    User.create({email: 'cody@email.com', password: '123'}),
-    User.create({email: 'murphy@email.com', password: '123'})
-  ])
+  // const users = await Promise.all([
+  //   User.create({email: 'cody@email.com', password: '123'}),
+  //   User.create({email: 'murphy@email.com', password: '123'})
+  // ])
 
-  console.log(`seeded ${users.length} users`)
+  // console.log(`seeded ${users.length} users`)
   console.log(`seeded successfully`)
 }
 
