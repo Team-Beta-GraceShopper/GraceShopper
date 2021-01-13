@@ -17,8 +17,8 @@ async function seed() {
   const products = await Promise.all([
     Product.create({
       name: 'Christmas Sweater',
-      category: 1,
-      price: 100,
+      category: 'sweater',
+      price: 10000,
       imageUrl:
         'https://www.bowwowsbest.com/v/vspfiles/photos/DOD-57243-2.jpg?v-cache=1539333998',
       productQuantity: 5,
@@ -28,8 +28,8 @@ async function seed() {
     }),
     Product.create({
       name: 'Ugly Sweater',
-      category: 1,
-      price: 150,
+      category: 'sweater',
+      price: 15000,
       imageUrl:
         'https://cdn.shopify.com/s/files/1/0512/7721/products/Red_Hearts_1024x1024.jpg?v=1602266507',
       productQuantity: 10,
@@ -39,8 +39,8 @@ async function seed() {
     }),
     Product.create({
       name: 'Birthday Dress',
-      category: 2,
-      price: 200,
+      category: 'dress',
+      price: 20000,
       imageUrl:
         'https://s7d2.scene7.com/is/image/PetSmart/5294347?$pdp-placeholder-desktop$',
       productQuantity: 3,
@@ -50,8 +50,8 @@ async function seed() {
     }),
     Product.create({
       name: 'Formal Dress',
-      category: 2,
-      price: 300,
+      category: 'dress',
+      price: 30000,
       imageUrl:
         'https://images-na.ssl-images-amazon.com/images/I/717Y3LiaoKL._AC_SL1200_.jpg',
       productQuantity: 10,
