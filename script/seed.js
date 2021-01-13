@@ -1,7 +1,14 @@
 'use strict'
 
 const db = require('../server/db')
-const {User, Cart, Product, OrderDetail, Order} = require('../server/db/models')
+const {
+  User,
+  Cart,
+  Product,
+  OrderDetail,
+  Order,
+  Category
+} = require('../server/db/models')
 
 async function seed() {
   await db.sync({force: true})
@@ -10,7 +17,7 @@ async function seed() {
   const products = await Promise.all([
     Product.create({
       name: 'Christmas Sweater',
-      category: 'Sweater',
+      category: 1,
       price: 100,
       imageUrl:
         'https://www.bowwowsbest.com/v/vspfiles/photos/DOD-57243-2.jpg?v-cache=1539333998',
@@ -21,7 +28,7 @@ async function seed() {
     }),
     Product.create({
       name: 'Ugly Sweater',
-      category: 'Sweater',
+      category: 1,
       price: 150,
       imageUrl:
         'https://cdn.shopify.com/s/files/1/0512/7721/products/Red_Hearts_1024x1024.jpg?v=1602266507',
@@ -32,7 +39,7 @@ async function seed() {
     }),
     Product.create({
       name: 'Birthday Dress',
-      category: 'Dresses',
+      category: 2,
       price: 200,
       imageUrl:
         'https://s7d2.scene7.com/is/image/PetSmart/5294347?$pdp-placeholder-desktop$',
@@ -43,7 +50,7 @@ async function seed() {
     }),
     Product.create({
       name: 'Formal Dress',
-      category: 'Dresses',
+      category: 2,
       price: 300,
       imageUrl:
         'https://images-na.ssl-images-amazon.com/images/I/717Y3LiaoKL._AC_SL1200_.jpg',
@@ -53,12 +60,27 @@ async function seed() {
       size: 'small'
     })
   ])
-  
+
+  const categories = await Promise.all([
+    Category.create({
+      categoryName: 'sweater',
+      imageUrl:
+        'https://s7d2.scene7.com/is/image/PetSmart/5294347?$pdp-placeholder-desktop$',
+      active: true
+    }),
+    Category.create({
+      categoryName: 'dress',
+      imageUrl:
+        'https://images-na.ssl-images-amazon.com/images/I/717Y3LiaoKL._AC_SL1200_.jpg',
+      active: true
+    })
+  ])
+
   const orderDetails = await Promise.all([
     OrderDetail.create({orderId: 1, productId: 1, price: 10.0, quantity: 1}),
     OrderDetail.create({orderId: 1, productId: 2, price: 15.0, quantity: 1})
   ])
-  
+
   const orders = await Promise.all([
     Order.create({
       orderUserId: 1,
@@ -98,6 +120,7 @@ async function seed() {
   console.log(`seeded ${orderDetails.length} order details`)
   console.log(`seeded ${orders.length} orders`)
   console.log(`seeded ${cart.length} cart`)
+  console.log(`seeded ${categories.length} categories`)
   console.log(`seeded successfully`)
 }
 
