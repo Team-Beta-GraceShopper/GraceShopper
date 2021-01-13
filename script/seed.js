@@ -1,17 +1,64 @@
 'use strict'
 
 const db = require('../server/db')
-const {OrderDetail, Order} = require('../server/db/models')
+const {User, Cart, Product, OrderDetail, Order} = require('../server/db/models')
 
 async function seed() {
   await db.sync({force: true})
   console.log('db synced!')
 
+  const products = await Promise.all([
+    Product.create({
+      name: 'Christmas Sweater',
+      category: 'Sweater',
+      price: 100,
+      imageUrl:
+        'https://www.bowwowsbest.com/v/vspfiles/photos/DOD-57243-2.jpg?v-cache=1539333998',
+      productQuantity: 5,
+      inStock: true,
+      description: 'wonderful sweater for the festive seasons',
+      size: 'small'
+    }),
+    Product.create({
+      name: 'Ugly Sweater',
+      category: 'Sweater',
+      price: 150,
+      imageUrl:
+        'https://cdn.shopify.com/s/files/1/0512/7721/products/Red_Hearts_1024x1024.jpg?v=1602266507',
+      productQuantity: 10,
+      inStock: true,
+      description: 'the ugliest of sweaters for ',
+      size: 'large'
+    }),
+    Product.create({
+      name: 'Birthday Dress',
+      category: 'Dresses',
+      price: 200,
+      imageUrl:
+        'https://s7d2.scene7.com/is/image/PetSmart/5294347?$pdp-placeholder-desktop$',
+      productQuantity: 3,
+      inStock: true,
+      description: 'A wonderfur birthday dress for that special day',
+      size: 'xsmall'
+    }),
+    Product.create({
+      name: 'Formal Dress',
+      category: 'Dresses',
+      price: 300,
+      imageUrl:
+        'https://images-na.ssl-images-amazon.com/images/I/717Y3LiaoKL._AC_SL1200_.jpg',
+      productQuantity: 10,
+      inStock: true,
+      description: 'A elegant dress for those long walks at the park',
+      size: 'small'
+    })
+  ])
+  
   const orderDetails = await Promise.all([
     OrderDetail.create({orderId: 1, productId: 1, price: 10.0, quantity: 1}),
     OrderDetail.create({orderId: 1, productId: 2, price: 15.0, quantity: 1})
   ])
-
+  
   const orders = await Promise.all([
     Order.create({
       orderUserId: 1,
@@ -20,8 +67,37 @@ async function seed() {
     })
   ])
 
-  console.log(`seeded ${orderDetails.length} orderDetails`)
+  const users = await Promise.all([
+    User.create({
+      userId: 1,
+      name: 'Bill',
+      email: 'billyBob224@gmail.com',
+      password: 'password123',
+      type: 'Admin',
+      address: '224 billy st',
+      phone: '1112223333'
+    }),
+    User.create({
+      userId: 2,
+      name: 'Jill',
+      email: 'Jilly335@gmail.com',
+      password: 'qwerty123',
+      type: 'User',
+      address: '335 jilly rd',
+      phone: '4445556666'
+    })
+  ])
+
+  const cart = await Promise.all([
+    Cart.create({productId: 1, userId: 5}),
+    Cart.create({productId: 55, userId: 1234})
+  ])
+
+  console.log(`seeded ${products.length} products`)
+  console.log(`seeded ${users.length} users`)
+  console.log(`seeded ${orderDetails.length} order details`)
   console.log(`seeded ${orders.length} orders`)
+  console.log(`seeded ${cart.length} cart`)
   console.log(`seeded successfully`)
 }
 
