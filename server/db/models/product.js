@@ -7,8 +7,12 @@ const Product = db.define('product', {
     type: Sequelize.STRING,
     allowNull: false
   },
+  category: {
+    type: Sequelize.ENUM('sweater', 'dress'),
+    allowNull: false
+  },
   price: {
-    type: Sequelize.FLOAT,
+    type: Sequelize.INTEGER,
     allowNull: false,
     validate: {
       min: 0
@@ -30,7 +34,7 @@ const Product = db.define('product', {
     allowNull: false
   },
   description: {
-    type: Sequelize.STRING,
+    type: Sequelize.TEXT,
     allowNull: false
   },
   size: {

@@ -43,6 +43,7 @@ router.put('/:productId', async (req, res, next) => {
 router.post('/', async (req, res, next) => {
   try {
     const createdProduct = await Product.create(req.body)
+    // destructure req.body to pass only what is REQUIRED into database
     if (createdProduct) {
       res.json(createdProduct)
     }
