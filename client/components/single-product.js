@@ -1,6 +1,7 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
-import {fetchSingleProduct, createCartItem} from '../store/products'
+import {fetchSingleProduct} from '../store/products'
+import {createCartItem} from '../store/cart'
 
 class SingleProduct extends Component {
   constructor() {
@@ -14,7 +15,7 @@ class SingleProduct extends Component {
   handleClick(id, quantity, price) {
     this.props.addToCart(
       this.props.selectedProduct.id,
-      5,
+      1,
       this.props.selectedProduct.price
     )
   }
@@ -47,6 +48,25 @@ class SingleProduct extends Component {
             <option>Large</option>
           </select>
         </div>
+        <div id="quantity">
+          <h4>quantity</h4>
+          <button
+            type="button"
+            onClick={() => {
+              this.handleAddQuantity()
+            }}
+          >
+            +
+          </button>
+          <button
+            type="button"
+            onClick={() => {
+              this.handleSubtractQuantity()
+            }}
+          >
+            -
+          </button>
+        </div>
         <div>
           <button
             type="button"
@@ -68,8 +88,8 @@ const mapState = state => {
     // Otherwise, state.user will be an empty object, and state.user.id will be falsey
     isLoggedIn: !!state.user.id,
     selectedProduct: state.products.selectedProduct,
-    cart: state.products.cartItems,
-    total: state.products.total
+    cart: state.cart.cartItems,
+    total: state.cart.total
   }
 }
 
