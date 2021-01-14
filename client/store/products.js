@@ -71,7 +71,6 @@ export default function(state = initialState, action) {
       return {...state, selectedProduct: action.product}
     case ADD_TO_CART:
       return {...state, cartItems: [...state.cartItems, action.product]}
-
     default:
       return state
   }
