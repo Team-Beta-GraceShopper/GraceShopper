@@ -1,19 +1,18 @@
 import React from 'react'
 import {Link} from 'react-router-dom'
 // import {connect} from 'react-redux'
-import SingleProduct from './single-product'
 
 const AllProducts = props => {
-  console.log('all category props', props)
+  console.log('all product props', props)
   const products = props.products
 
   return (
     <div>
-      <div>
+      <div id="container">
         {products.map(product => {
           return (
-            <div key={product.id}>
-              <Link to="route" component={SingleProduct}>
+            <div key={product.id} className="">
+              <Link to={`products/${product.id}`}>
                 <h1>{product.name}</h1>
               </Link>
               <img src={product.imageUrl} />
