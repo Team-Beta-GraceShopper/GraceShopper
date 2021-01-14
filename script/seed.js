@@ -61,24 +61,24 @@ async function seed() {
     })
   ])
 
-  const categories = await Promise.all([
-    Category.create({
-      categoryName: 'sweater',
-      imageUrl:
-        'https://s7d2.scene7.com/is/image/PetSmart/5294347?$pdp-placeholder-desktop$',
-      active: true
-    }),
-    Category.create({
-      categoryName: 'dress',
-      imageUrl:
-        'https://images-na.ssl-images-amazon.com/images/I/717Y3LiaoKL._AC_SL1200_.jpg',
-      active: true
-    })
-  ])
+  // const categories = await Promise.all([
+  //   Category.create({
+  //     categoryName: 'sweater',
+  //     imageUrl:
+  //       'https://s7d2.scene7.com/is/image/PetSmart/5294347?$pdp-placeholder-desktop$',
+  //     active: true
+  //   }),
+  //   Category.create({
+  //     categoryName: 'dress',
+  //     imageUrl:
+  //       'https://images-na.ssl-images-amazon.com/images/I/717Y3LiaoKL._AC_SL1200_.jpg',
+  //     active: true
+  //   })
+  // ])
 
   const orderDetails = await Promise.all([
-    OrderDetail.create({orderId: 1, productId: 1, price: 10.0, quantity: 1}),
-    OrderDetail.create({orderId: 1, productId: 2, price: 15.0, quantity: 1})
+    OrderDetail.create({price: 10.0, quantity: 1}),
+    OrderDetail.create({price: 15.0, quantity: 1})
   ])
 
   const orders = await Promise.all([
@@ -110,17 +110,17 @@ async function seed() {
     })
   ])
 
-  const cart = await Promise.all([
-    Cart.create({productId: 1, userId: 5}),
-    Cart.create({productId: 55, userId: 1234})
-  ])
+  // const cart = await Promise.all([
+  //   Cart.create({productId: 1, userId: 5}),
+  //   Cart.create({productId: 55, userId: 1234}),
+  // ])
 
   console.log(`seeded ${products.length} products`)
   console.log(`seeded ${users.length} users`)
   console.log(`seeded ${orderDetails.length} order details`)
   console.log(`seeded ${orders.length} orders`)
-  console.log(`seeded ${cart.length} cart`)
-  console.log(`seeded ${categories.length} categories`)
+  // console.log(`seeded ${cart.length} cart`)
+  // console.log(`seeded ${categories.length} categories`)
   console.log(`seeded successfully`)
 }
 
