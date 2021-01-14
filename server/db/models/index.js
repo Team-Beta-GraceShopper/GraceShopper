@@ -12,8 +12,8 @@ const Order = require('./orders')
 // Order.belongsTo(User)
 // User.hasMany(Order)
 
-// OrderDetail.belongsTo(Order)
-// OrderDetail.hasMany(Product)
+OrderDetail.belongsTo(Order)
+Product.hasMany(OrderDetail)
 
 /**
  * We'll export all of our models here, so that any time a module needs a model,

@@ -50,6 +50,17 @@ export const fetchSingleProduct = productId => {
   }
 }
 
+export const createCartItem = product => {
+  return async dispatch => {
+    try {
+      const res = await axios.post('/api/orderDetails', product)
+      dispatch(addToCart(res.data))
+    } catch (error) {
+      console.error(error)
+    }
+  }
+}
+
 /**
  * INITIAL STATE
  */
@@ -71,7 +82,6 @@ export default function(state = initialState, action) {
       return {...state, selectedProduct: action.product}
     case ADD_TO_CART:
       return {...state, cartItems: [...state.cartItems, action.product]}
-
     default:
       return state
   }
