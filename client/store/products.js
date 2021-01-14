@@ -6,7 +6,6 @@ import history from '../history'
  */
 const SET_PRODUCTS = 'SET_PRODUCTS'
 const SET_SINGLE_PRODUCT = 'SET_SINGLE_PRODUCT'
-const ADD_TO_CART = 'ADD_TO_CART'
 /**
  * ACTION CREATORS
  */
@@ -17,11 +16,6 @@ const setProducts = products => ({
 
 const setSingleProduct = product => ({
   type: SET_SINGLE_PRODUCT,
-  product
-})
-
-const addToCart = product => ({
-  type: ADD_TO_CART,
   product
 })
 
@@ -50,25 +44,12 @@ export const fetchSingleProduct = productId => {
   }
 }
 
-export const createCartItem = cartObject => {
-  return async dispatch => {
-    try {
-      const res = await axios.post('/api/orderDetails', cartObject)
-      dispatch(addToCart(res.data))
-    } catch (error) {
-      console.error(error)
-    }
-  }
-}
-
 /**
  * INITIAL STATE
  */
 const initialState = {
   allProducts: [],
-  selectedProduct: {},
-  cartItems: [],
-  total: 0
+  selectedProduct: {}
 }
 
 /**
@@ -80,8 +61,6 @@ export default function(state = initialState, action) {
       return {...state, allProducts: action.products}
     case SET_SINGLE_PRODUCT:
       return {...state, selectedProduct: action.product}
-    case ADD_TO_CART:
-      return {...state, cartItems: [...state.cartItems, action.product]}
     default:
       return state
   }
