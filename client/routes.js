@@ -24,7 +24,7 @@ class Routes extends Component {
   }
 
   render() {
-    const {isLoggedIn, products} = this.props
+    const {isLoggedIn, products, selectedProduct, match} = this.props
     console.log('route props', this.props)
     return (
       <div>
@@ -38,10 +38,7 @@ class Routes extends Component {
           <Route path="/login" component={Login} />
           <Route path="/signup" component={Signup} />
           <Route path="/products/:productId" component={SingleProduct} />
-          <Route
-            path="/cart"
-            render={routeProps => <Cart products={products} />}
-          />
+          <Route path="/cart" component={Cart} />
           {isLoggedIn && (
             <Switch>
               {/* Routes placed here are only available after logging in */}

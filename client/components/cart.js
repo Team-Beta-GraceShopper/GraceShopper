@@ -1,49 +1,68 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
+import {addQuantity, subtractQuantity} from '../store/cart'
 
 class Cart extends Component {
+  constructor(props) {
+    super(props)
+    // this.handleClick = this.handleClick.bind(this)
+    // this.calculateTotal = this.calculateTotal.bind(this)
+    this.handleAddQuantity = this.handleAddQuantity.bind(this)
+    this.handleSubtractQuantity = this.handleSubtractQuantity.bind(this)
+  }
+
+  // calculateTotal () {
+
+  // }
+
+  handleAddQuantity(id) {
+    this.props.addQuantity(id)
+  }
+
+  handleSubtractQuantity(id) {
+    this.props.subtractQuantity(id)
+  }
+
   render() {
-    const {cart} = this.props
-    // const cart = {
-    //   productId: 1,
-
-    // }
-
-    console.log('this is the props:', this.props)
+    const {cart, total} = this.props
+    console.log('cart props:', this.props)
     return (
       <div>
         <div>hello world</div>
 
-        <h1>Cart</h1>
+        <h2>My Cart</h2>
         {cart.length ? (
           <div>
-            cart.map((item) => (
-            <div key={item.id}>
-              <h2>Name: {item.name}</h2>
-              <h2>Price: ${item.price / 100}</h2>
-              <h2>Quantity: {item.quantity}</h2>
-              <div id="quantity">
-                <h4>quantity</h4>
-                <button
-                  type="button"
-                  onClick={() => {
-                    this.handleAddQuantity()
-                  }}
-                >
-                  +
-                </button>
-                <button
-                  type="button"
-                  onClick={() => {
-                    this.handleSubtractQuantity()
-                  }}
-                >
-                  -
-                </button>
+            {cart.map(item => (
+              <div key={item.id}>
+                <h2>{item.name}</h2>
+                <p>Price: ${item.price / 100}</p>
+                <p>Quantity: {item.quantity}</p>
+                <div id="quantity">
+                  <h4>quantity</h4>
+                  <button
+                    type="button"
+                    onClick={() => {
+                      this.handleSubtractQuantity(item.id)
+                    }}
+                  >
+                    -
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => {
+                      this.handleAddQuantity(item.id)
+                    }}
+                  >
+                    +
+                  </button>
+                </div>
               </div>
-            </div>
-            ))
-            <h1>Total: ${this.props.total}</h1>
+            ))}
+            <h1>Total: ${this.props.total / 100}</h1>
+            <button type="button" onClick={() => {}}>
+              Checkout
+            </button>
           </div>
         ) : (
           <h1>Nothing is in the cart!</h1>
@@ -60,8 +79,16 @@ const mapState = state => {
     total: state.cart.total
   }
 }
-// mapDispatch = (dispatch) => {
-//   loadCart: () => dispatch()
-// }
 
-export default connect(mapState)(Cart)
+const mapDispatch = dispatch => {
+  return {
+    addQuantity: id => {
+      dispatch(addQuantity(id))
+    },
+    subtractQuantity: id => {
+      dispatch(subtractQuantity(id))
+    }
+  }
+}
+
+export default connect(mapState, mapDispatch)(Cart)
