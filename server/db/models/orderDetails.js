@@ -10,6 +10,10 @@ const OrderDetail = db.define('orderDetail', {
   //   type: Sequelize.INTEGER,
   //   allowNull: false
   // },
+  name: {
+    type: Sequelize.STRING,
+    allowNull: false
+  },
   price: {
     type: Sequelize.INTEGER,
     allowNull: false,

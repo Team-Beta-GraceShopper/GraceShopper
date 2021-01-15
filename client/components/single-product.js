@@ -12,9 +12,10 @@ class SingleProduct extends Component {
     this.props.loadSingleProduct(this.props.match.params.productId)
   }
 
-  handleClick(id, quantity, price) {
+  handleClick(id, name, quantity, price) {
     this.props.addToCart(
       this.props.selectedProduct.id,
+      this.props.selectedProduct.name,
       1,
       this.props.selectedProduct.price
     )
@@ -31,7 +32,7 @@ class SingleProduct extends Component {
         </div>
         <div id="product-details">
           <h2>{this.props.selectedProduct.name}</h2>
-          <h4>{this.props.selectedProduct.price}</h4>
+          <h4>Price: ${this.props.selectedProduct.price / 100}</h4>
           {this.props.selectedProduct.inStock ? (
             <h4>In Stock</h4>
           ) : (
@@ -39,7 +40,7 @@ class SingleProduct extends Component {
           )}
         </div>
         <div id="product-description">
-          <h4>{this.props.selectedProduct.description}</h4>
+          <h4>Description: {this.props.selectedProduct.description}</h4>
         </div>
         <div id="size-dropdown-list">
           <select>
@@ -48,30 +49,11 @@ class SingleProduct extends Component {
             <option>Large</option>
           </select>
         </div>
-        <div id="quantity">
-          <h4>quantity</h4>
-          <button
-            type="button"
-            onClick={() => {
-              this.handleAddQuantity()
-            }}
-          >
-            +
-          </button>
-          <button
-            type="button"
-            onClick={() => {
-              this.handleSubtractQuantity()
-            }}
-          >
-            -
-          </button>
-        </div>
         <div>
           <button
             type="button"
             onClick={() => {
-              this.handleClick(id, quantity, price)
+              this.handleClick(id, name, quantity, price)
             }}
           >
             Add to Cart
@@ -101,9 +83,10 @@ const mapDispatch = dispatch => {
     loadSingleProduct: productId => {
       dispatch(fetchSingleProduct(productId))
     },
-    addToCart: (productId, quantity, price) => {
+    addToCart: (productId, name, quantity, price) => {
       const cartObject = {
         productId,
+        name,
         quantity,
         price
       }

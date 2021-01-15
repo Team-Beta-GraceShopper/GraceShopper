@@ -3,11 +3,9 @@
 const db = require('../server/db')
 const {
   User,
-  Cart,
   Product,
-  OrderDetail,
-  Order,
-  Category
+  // OrderDetail,
+  Order
 } = require('../server/db/models')
 
 async function seed() {
@@ -76,10 +74,10 @@ async function seed() {
   //   })
   // ])
 
-  const orderDetails = await Promise.all([
-    OrderDetail.create({price: 10.0, quantity: 1}),
-    OrderDetail.create({price: 15.0, quantity: 1})
-  ])
+  // const orderDetails = await Promise.all([
+  //   OrderDetail.create({price: 10.0, quantity: 1}),
+  //   OrderDetail.create({price: 15.0, quantity: 1})
+  // ])
 
   const orders = await Promise.all([
     Order.create({
@@ -117,7 +115,7 @@ async function seed() {
 
   console.log(`seeded ${products.length} products`)
   console.log(`seeded ${users.length} users`)
-  console.log(`seeded ${orderDetails.length} order details`)
+  // console.log(`seeded ${orderDetails.length} order details`)
   console.log(`seeded ${orders.length} orders`)
   // console.log(`seeded ${cart.length} cart`)
   // console.log(`seeded ${categories.length} categories`)

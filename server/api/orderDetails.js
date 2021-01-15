@@ -11,10 +11,10 @@ router.get('/', async (req, res, next) => {
   }
 })
 
-router.get('/:productId', async (req, res, next) => {
+router.get('/:orderDetailsId', async (req, res, next) => {
   try {
-    const product = await OrderDetail.findByPk(req.params.productId)
-    res.json(product)
+    const orderDetail = await OrderDetail.findByPk(req.params.orderDetailsId)
+    res.json(orderDetail)
   } catch (error) {
     next(error)
   }
@@ -30,11 +30,13 @@ router.delete('/:productId', async (req, res, next) => {
   }
 })
 
-router.put('/:productId', async (req, res, next) => {
+router.put('/:orderDetailsId', async (req, res, next) => {
   try {
-    const updatedProduct = await OrderDetail.findByPk(req.params.productId)
-    await updatedProduct.update(req.body)
-    res.send(await OrderDetail.findByPk(req.params.robotId, {}))
+    const updatedOrderDetail = await OrderDetail.findByPk(
+      req.params.orderDetailsId
+    )
+    await updatedOrderDetail.update(req.body)
+    res.json(updatedOrderDetail)
   } catch (error) {
     next(error)
   }
