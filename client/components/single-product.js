@@ -6,41 +6,46 @@ import {createCartItem} from '../store/cart'
 class SingleProduct extends Component {
   constructor() {
     super()
+    this.state = {}
     this.handleClick = this.handleClick.bind(this)
   }
+
   componentDidMount() {
     this.props.loadSingleProduct(this.props.match.params.productId)
   }
 
-  handleClick(id, name, quantity, price) {
-    this.props.addToCart(
-      this.props.selectedProduct.id,
-      this.props.selectedProduct.name,
-      1,
-      this.props.selectedProduct.price
-    )
+  async handleClick() {
+    await this.setState({
+      productId: this.props.selectedProduct.id,
+      name: this.props.selectedProduct.name,
+      quantity: 1,
+      price: this.props.selectedProduct.price
+    })
+
+    this.props.addToCart({...this.state})
   }
 
   render() {
     console.log('single product props', this.props)
-    const {id, price} = this.props.selectedProduct
-    const quantity = 1
+    const {
+      price,
+      name,
+      imageUrl,
+      inStock,
+      description
+    } = this.props.selectedProduct
     return (
       <div>
         <div id="product-image">
-          <img src={this.props.selectedProduct.imageUrl} />
+          <img src={imageUrl} />
         </div>
         <div id="product-details">
-          <h2>{this.props.selectedProduct.name}</h2>
-          <h4>Price: ${this.props.selectedProduct.price / 100}</h4>
-          {this.props.selectedProduct.inStock ? (
-            <h4>In Stock</h4>
-          ) : (
-            <h4>Out of Stock</h4>
-          )}
+          <h2>{name}</h2>
+          <h4>Price: ${price / 100}</h4>
+          {inStock ? <h4>In Stock</h4> : <h4>Out of Stock</h4>}
         </div>
         <div id="product-description">
-          <h4>Description: {this.props.selectedProduct.description}</h4>
+          <h4>Description: {description}</h4>
         </div>
         <div id="size-dropdown-list">
           <select>
@@ -53,7 +58,7 @@ class SingleProduct extends Component {
           <button
             type="button"
             onClick={() => {
-              this.handleClick(id, name, quantity, price)
+              this.handleClick()
             }}
           >
             Add to Cart
@@ -83,16 +88,19 @@ const mapDispatch = dispatch => {
     loadSingleProduct: productId => {
       dispatch(fetchSingleProduct(productId))
     },
-    addToCart: (productId, name, quantity, price) => {
-      const cartObject = {
-        productId,
-        name,
-        quantity,
-        price
-      }
-      console.log('Cart Object -->', cartObject)
+    addToCart: cartObject => {
       dispatch(createCartItem(cartObject))
     }
+    // addToCart: (productId, name, quantity, price) => {
+    //   const cartObject = {
+    //     productId,
+    //     name,
+    //     quantity,
+    //     price
+    //   }
+    //   console.log('Cart Object -->', cartObject)
+    //   dispatch(createCartItem(cartObject))
+    // }
   }
 }
 

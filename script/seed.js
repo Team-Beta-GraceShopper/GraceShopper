@@ -3,9 +3,9 @@
 const db = require('../server/db')
 const {
   User,
-  Product,
+  Product
   // OrderDetail,
-  Order
+  // Order
 } = require('../server/db/models')
 
 async function seed() {
@@ -32,7 +32,7 @@ async function seed() {
         'https://cdn.shopify.com/s/files/1/0512/7721/products/Red_Hearts_1024x1024.jpg?v=1602266507',
       productQuantity: 10,
       inStock: true,
-      description: 'the ugliest of sweaters for ',
+      description: 'the ugliest of sweaters for that ugly sweater party',
       size: 'large'
     }),
     Product.create({
@@ -79,13 +79,13 @@ async function seed() {
   //   OrderDetail.create({price: 15.0, quantity: 1})
   // ])
 
-  const orders = await Promise.all([
-    Order.create({
-      orderUserId: 1,
-      orderTotal: 25.0,
-      shippingAddress: '123 Main St. New York, NY 11111'
-    })
-  ])
+  // const orders = await Promise.all([
+  //   Order.create({
+  //     orderUserId: 1,
+  //     orderTotal: 25.0,
+  //     shippingAddress: '123 Main St. New York, NY 11111'
+  //   })
+  // ])
 
   const users = await Promise.all([
     User.create({
@@ -116,7 +116,7 @@ async function seed() {
   console.log(`seeded ${products.length} products`)
   console.log(`seeded ${users.length} users`)
   // console.log(`seeded ${orderDetails.length} order details`)
-  console.log(`seeded ${orders.length} orders`)
+  // console.log(`seeded ${orders.length} orders`)
   // console.log(`seeded ${cart.length} cart`)
   // console.log(`seeded ${categories.length} categories`)
   console.log(`seeded successfully`)
