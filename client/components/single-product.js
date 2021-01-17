@@ -21,12 +21,14 @@ class SingleProduct extends Component {
       quantity: 1,
       price: this.props.selectedProduct.price
     })
-
+    const totalData = JSON.parse(localStorage.getItem('total'))
+    totalData.total += this.props.selectedProduct.price
+    localStorage.setItem('total', JSON.stringify(totalData))
     this.props.addToCart({...this.state})
   }
 
   render() {
-    console.log('single product props', this.props)
+    console.log('single product props', this.props.cart)
     const {
       price,
       name,
@@ -34,6 +36,25 @@ class SingleProduct extends Component {
       inStock,
       description
     } = this.props.selectedProduct
+
+    //LOCALSTORAGE
+    if (typeof Storage !== 'undefined') {
+      if (JSON.parse(localStorage.getItem('total')) === null) {
+        // console.log("NO ITEMS ON LOCALSTORAGE", this.props.cart)
+        localStorage.setItem('total', JSON.stringify({total: 0}))
+      }
+      if (JSON.parse(localStorage.getItem('items')) === null) {
+        // console.log("NO ITEMS ON LOCALSTORAGE", this.props.cart)
+        localStorage.setItem('items', JSON.stringify(this.props.cart))
+        // window.location.reload();
+        console.log('CART HERE ->', this.props.cart)
+      } else {
+        localStorage.setItem('items', JSON.stringify(this.props.cart))
+        // window.location.reload();
+        console.log('CART HERE ----->', this.props.cart)
+      }
+    }
+
     return (
       <div>
         <div id="product-image">

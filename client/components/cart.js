@@ -15,25 +15,63 @@ class Cart extends Component {
 
   // }
 
-  handleAddQuantity(id) {
-    this.props.addQuantity(id)
+  // pull local state data
+  // use local state data for rendering
+  // add quantity buttons to local state
+
+  handleAddQuantity(name) {
+    // this.props.addQuantity(id)
+    const items = JSON.parse(localStorage.getItem('items'))
+    const totalPrice = JSON.parse(localStorage.getItem('total'))
+    let item = items.find(item => item.name === name)
+    if (item) {
+      item.quantity += 1
+      totalPrice.total += item.price
+    }
+    console.log(items)
+    localStorage.setItem('items', JSON.stringify(items))
+    localStorage.setItem('total', JSON.stringify(totalPrice))
+    window.location.reload()
   }
 
-  handleSubtractQuantity(id) {
-    this.props.subtractQuantity(id)
+  handleSubtractQuantity(name) {
+    // this.props.subtractQuantity(id)
+    const items = JSON.parse(localStorage.getItem('items'))
+    const totalPrice = JSON.parse(localStorage.getItem('total'))
+    let item = items.find(item => item.name === name)
+    if (item.quantity > 1) {
+      item.quantity -= 1
+      totalPrice.total -= item.price
+    }
+    localStorage.setItem('items', JSON.stringify(items))
+    localStorage.setItem('total', JSON.stringify(totalPrice))
+    window.location.reload()
   }
 
   render() {
+    // if(typeof Storage !== "undefined"){
+    //   if (JSON.parse(localStorage.getItem("total")) === null){
+    //     console.log("NO ITEMS ON LOCALSTORAGE", this.props.cart)
+    //     localStorage.setItem("total", JSON.stringify({total: 0}))
+    //   }
+    // }
+
+    console.log('HERE --->', JSON.parse(localStorage.getItem('items')))
+    console.log('CART HERE --->', this.props.cart)
+    const localStorageData = JSON.parse(localStorage.getItem('items'))
+    const localStorageTotal = JSON.parse(localStorage.getItem('total'))
+    console.log(localStorageTotal.total)
     const {cart, total} = this.props
     console.log('cart props:', this.props)
+
     return (
       <div>
         <div>hello world</div>
 
         <h2>My Cart</h2>
-        {cart.length ? (
+        {localStorageData !== null ? (
           <div>
-            {cart.map(item => (
+            {localStorageData.map(item => (
               <div key={item.id}>
                 <h2>{item.name}</h2>
                 <p>Price: ${item.price / 100}</p>
@@ -43,7 +81,7 @@ class Cart extends Component {
                   <button
                     type="button"
                     onClick={() => {
-                      this.handleSubtractQuantity(item.id)
+                      this.handleSubtractQuantity(item.name)
                     }}
                   >
                     -
@@ -51,7 +89,7 @@ class Cart extends Component {
                   <button
                     type="button"
                     onClick={() => {
-                      this.handleAddQuantity(item.id)
+                      this.handleAddQuantity(item.name)
                     }}
                   >
                     +
@@ -59,7 +97,7 @@ class Cart extends Component {
                 </div>
               </div>
             ))}
-            <h1>Total: ${this.props.total / 100}</h1>
+            <h1>Total: ${localStorageTotal.total / 100}</h1>
             <button type="button" onClick={() => {}}>
               Checkout
             </button>

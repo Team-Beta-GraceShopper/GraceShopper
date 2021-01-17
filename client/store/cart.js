@@ -41,6 +41,9 @@ export const getOrderDetails = orderDetails => ({
 export const createCartItem = cartObject => {
   return async dispatch => {
     try {
+      // Comparing cartObject with orderDetails database
+
+      // if (cartObject)
       const res = await axios.post('/api/orderDetails', cartObject)
       dispatch(addToCart(res.data))
     } catch (error) {
@@ -87,10 +90,11 @@ export default function(state = initialState, action) {
     case ADD_TO_CART:
       //check if the action id already exists in the cartItems
       let existedItem = state.cartItems.find(
-        item => item.id === action.cartItem.id
+        item => item.name === action.cartItem.name
       )
       if (existedItem) {
-        action.cartItem.quantity += 1
+        // action.cartItem.quantity += 1 //Question of what is this doing?
+        existedItem.quantity += 1 //Fixed duplicate items on cart page if addToCart button is pressed more than once
         return {
           ...state,
           total: state.total + action.cartItem.price
