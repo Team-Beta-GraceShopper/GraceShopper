@@ -8,18 +8,23 @@ const AllProducts = props => {
 
   return (
     <div>
-      <div id="container">
-        {products.map(product => {
-          return (
-            <div key={product.id} className="">
-              <Link to={`products/${product.id}`}>
-                <h1>{product.name}</h1>
-              </Link>
-              <img src={product.imageUrl} />
-              <h3>${product.price / 100}</h3>
-            </div>
-          )
-        })}
+      <div id="grid-container">
+        <h1>Our Products</h1>
+        <ul className="products">
+          {products.map(product => {
+            return (
+              <li key={product.id}>
+                <div className="product">
+                  <Link to={`products/${product.id}`}>
+                    <h1>{product.name}</h1>
+                  </Link>
+                  <img src={product.imageUrl} alt={product.name} />
+                  <h3>${product.price / 100}</h3>
+                </div>
+              </li>
+            )
+          })}
+        </ul>
       </div>
     </div>
   )
