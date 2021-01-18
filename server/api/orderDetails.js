@@ -2,7 +2,12 @@ const router = require('express').Router()
 
 const {OrderDetail} = require('../db/models')
 
-router.get('/', async (req, res, next) => {
+const isAdmin = (req, res, next) =>
+  req.user.type === 'Admin'
+    ? next()
+    : res.send('Only Admins are allowed to alter Order Details!')
+
+router.get('/', isAdmin, async (req, res, next) => {
   try {
     const order = await OrderDetail.findAll()
     res.json(order)
@@ -11,7 +16,7 @@ router.get('/', async (req, res, next) => {
   }
 })
 
-router.get('/:orderDetailsId', async (req, res, next) => {
+router.get('/:orderDetailsId', isAdmin, async (req, res, next) => {
   try {
     const orderDetail = await OrderDetail.findByPk(req.params.orderDetailsId)
     res.json(orderDetail)
@@ -20,17 +25,19 @@ router.get('/:orderDetailsId', async (req, res, next) => {
   }
 })
 
-router.delete('/:productId', async (req, res, next) => {
+router.delete('/:productId', isAdmin, async (req, res, next) => {
   try {
-    const deletedProduct = await OrderDetail.findByPk(req.params.productId)
-    await deletedProduct.destroy()
+    const deletedOrderDetail = await OrderDetail.findByPk(
+      req.params.orderDetail.Id
+    )
+    await deletedOrderDetail.destroy()
     res.status(204).end()
   } catch (error) {
     next(error)
   }
 })
 
-router.put('/:orderDetailsId', async (req, res, next) => {
+router.put('/:orderDetailsId', isAdmin, async (req, res, next) => {
   try {
     const updatedOrderDetail = await OrderDetail.findByPk(
       req.params.orderDetailsId
@@ -42,7 +49,7 @@ router.put('/:orderDetailsId', async (req, res, next) => {
   }
 })
 
-router.post('/', async (req, res, next) => {
+router.post('/', isAdmin, async (req, res, next) => {
   try {
     const createdOrderDetail = await OrderDetail.create(req.body)
     // destructure req.body to pass only what is REQUIRED into database
