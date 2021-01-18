@@ -1,12 +1,11 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import {fetchSingleProduct} from '../store/products'
-import {createCartItem} from '../store/cart'
+import {addToCart} from '../store/cart'
 
 class SingleProduct extends Component {
   constructor() {
     super()
-    this.state = {}
     this.handleClick = this.handleClick.bind(this)
   }
 
@@ -14,19 +13,18 @@ class SingleProduct extends Component {
     this.props.loadSingleProduct(this.props.match.params.productId)
   }
 
-  async handleClick() {
-    await this.setState({
-      productId: this.props.selectedProduct.id,
-      name: this.props.selectedProduct.name,
-      quantity: 1,
-      price: this.props.selectedProduct.price
-    })
-
-    this.props.addToCart({...this.state})
+  async handleClick(product) {
+    console.log('cart object------->', product)
+    await this.props.addToCart(product)
+    console.log('cart items---------->', this.props.cart)
+    console.log('cart total---------->', this.props.total)
+    localStorage.setItem('cartItems', JSON.stringify(this.props.cart))
+    localStorage.setItem('total', JSON.stringify(this.props.total))
   }
 
   render() {
     console.log('single product props', this.props)
+    const product = this.props.selectedProduct
     const {
       price,
       name,
@@ -58,7 +56,7 @@ class SingleProduct extends Component {
           <button
             type="button"
             onClick={() => {
-              this.handleClick()
+              this.handleClick(product)
             }}
           >
             Add to Cart
@@ -88,19 +86,9 @@ const mapDispatch = dispatch => {
     loadSingleProduct: productId => {
       dispatch(fetchSingleProduct(productId))
     },
-    addToCart: cartObject => {
-      dispatch(createCartItem(cartObject))
+    addToCart: product => {
+      dispatch(addToCart(product))
     }
-    // addToCart: (productId, name, quantity, price) => {
-    //   const cartObject = {
-    //     productId,
-    //     name,
-    //     quantity,
-    //     price
-    //   }
-    //   console.log('Cart Object -->', cartObject)
-    //   dispatch(createCartItem(cartObject))
-    // }
   }
 }
 

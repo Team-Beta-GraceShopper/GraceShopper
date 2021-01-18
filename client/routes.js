@@ -63,8 +63,8 @@ const mapState = state => {
     isLoggedIn: !!state.user.id,
     products: state.products.allProducts,
     selectedProduct: state.products.selectedProduct,
-    cart: state.products.cartItems,
-    total: state.products.total
+    cart: state.cart.cartItems,
+    cartTotal: state.cart.total
   }
 }
 
