@@ -9,7 +9,7 @@ import history from '../history'
 const ADD_TO_CART = 'ADD_TO_CART'
 const ADD_QUANTITY = 'ADD_QUANTITY'
 const SUBTRACT_QUANTITY = 'SUBTRACT_QUANTITY'
-const GET_ORDER_DETAILS = 'GET_ORDER_DETAILS'
+const REMOVE_FROM_CART = 'REMOVE_FROM_CART'
 /**
  * ACTION CREATORS
  */
@@ -29,25 +29,14 @@ export const subtractQuantity = itemId => ({
   itemId
 })
 
-export const getOrderDetails = orderDetails => ({
-  type: GET_ORDER_DETAILS,
-  orderDetails
+export const removeFromCart = cartItem => ({
+  type: REMOVE_FROM_CART,
+  cartItem
 })
 
 /**
  * THUNK CREATORS
  */
-
-export const createCartItem = cartObject => {
-  return async dispatch => {
-    try {
-      const res = await axios.post('/api/orderDetails', cartObject)
-      dispatch(addToCart(res.data))
-    } catch (error) {
-      console.error(error)
-    }
-  }
-}
 // id needs to be orderDetails id and not product id:
 export const addQuantityToDatabase = (itemId, quantity) => {
   return async dispatch => {
@@ -75,8 +64,8 @@ export const fetchOrderDetails = () => {
  * INITIAL STATE
  */
 const initialState = {
-  cartItems: [],
-  total: 0
+  cartItems: JSON.parse(localStorage.getItem('cartItems') || '[]'),
+  total: JSON.parse(localStorage.getItem('total') || 0)
 }
 
 /**
@@ -86,6 +75,7 @@ export default function(state = initialState, action) {
   switch (action.type) {
     case ADD_TO_CART:
       //check if the action id already exists in the cartItems
+      console.log('state cart items------>', state.cartItems)
       let existedItem = state.cartItems.find(
         item => item.id === action.cartItem.id
       )
@@ -134,6 +124,18 @@ export default function(state = initialState, action) {
           ...state,
           total: reducedTotal
         }
+      }
+
+    case REMOVE_FROM_CART:
+      let updatedCart = state.cartItems.filter(
+        item => item.id !== action.cartItem.id
+      )
+      let removedTotal =
+        state.total - action.cartItem.price * action.cartItem.quantity
+      return {
+        ...state,
+        cartItems: updatedCart,
+        total: removedTotal
       }
 
     default:
