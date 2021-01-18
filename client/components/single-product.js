@@ -33,7 +33,7 @@ class SingleProduct extends Component {
       description
     } = this.props.selectedProduct
     return (
-      <div>
+      <div className="product">
         <div id="product-image">
           <img src={imageUrl} />
         </div>

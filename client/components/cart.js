@@ -1,7 +1,9 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
+import {Link} from 'react-router-dom'
 import {addQuantity, subtractQuantity, removeFromCart} from '../store/cart'
 import {createOrderDatabase, clearOrder} from '../store/orders'
+import Checkout from './checkout'
 
 class Cart extends Component {
   constructor(props) {
@@ -81,14 +83,9 @@ class Cart extends Component {
               </div>
             ))}
             <h2>Total: ${total / 100}</h2>
-            <button
-              type="button"
-              onClick={() => {
-                this.handleCheckout()
-              }}
-            >
-              Checkout
-            </button>
+            <Link to="/checkout">
+              <button type="button">Checkout</button>
+            </Link>
           </div>
         ) : (
           <h3>Nothing is in the cart!</h3>

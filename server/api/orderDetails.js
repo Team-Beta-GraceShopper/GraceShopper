@@ -20,10 +20,12 @@ router.get('/:orderDetailsId', async (req, res, next) => {
   }
 })
 
-router.delete('/:productId', async (req, res, next) => {
+router.delete('/:orderDetailsId', async (req, res, next) => {
   try {
-    const deletedProduct = await OrderDetail.findByPk(req.params.productId)
-    await deletedProduct.destroy()
+    const deletedOrderDetail = await OrderDetail.findByPk(
+      req.params.orderDetailsId
+    )
+    await deletedOrderDetail.destroy()
     res.status(204).end()
   } catch (error) {
     next(error)

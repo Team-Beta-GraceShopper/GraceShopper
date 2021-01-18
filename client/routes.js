@@ -9,7 +9,9 @@ import {
   UserHome,
   AllProducts,
   SingleProduct,
-  Cart
+  Cart,
+  Checkout,
+  CheckoutDetails
 } from './components'
 import {me} from './store'
 import {fetchProducts} from './store/products'
@@ -39,6 +41,8 @@ class Routes extends Component {
           <Route path="/signup" component={Signup} />
           <Route path="/products/:productId" component={SingleProduct} />
           <Route path="/cart" component={Cart} />
+          <Route path="/checkout" component={Checkout} />
+          <Route path="/checkoutDetails" component={CheckoutDetails} />
           {isLoggedIn && (
             <Switch>
               {/* Routes placed here are only available after logging in */}
@@ -64,7 +68,8 @@ const mapState = state => {
     products: state.products.allProducts,
     selectedProduct: state.products.selectedProduct,
     cart: state.cart.cartItems,
-    cartTotal: state.cart.total
+    cartTotal: state.cart.total,
+    order: state.orders.order
   }
 }
 
