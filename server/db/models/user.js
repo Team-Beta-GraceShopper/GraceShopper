@@ -33,15 +33,15 @@ const User = db.define('user', {
   },
   type: {
     type: Sequelize.ENUM('Guest', 'User', 'Admin'),
-    allowNull: false
+    allowNull: true
   },
   address: {
     type: Sequelize.STRING,
-    allowNull: false
+    allowNull: true
   },
   phone: {
     type: Sequelize.STRING,
-    allowNull: false
+    allowNull: true
   }
 })
 

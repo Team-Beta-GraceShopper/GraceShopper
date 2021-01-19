@@ -30,7 +30,7 @@ export const me = () => async dispatch => {
   }
 }
 
-export const auth = (email, password, method) => async dispatch => {
+export const authLogin = (email, password, method) => async dispatch => {
   let res
   try {
     res = await axios.post(`/auth/${method}`, {email, password})
@@ -40,7 +40,39 @@ export const auth = (email, password, method) => async dispatch => {
 
   try {
     dispatch(getUser(res.data))
-    history.push('/home')
+    history.push('/')
+  } catch (dispatchOrHistoryErr) {
+    console.error(dispatchOrHistoryErr)
+  }
+}
+
+export const authSignUp = (
+  username,
+  email,
+  password,
+  method
+) => async dispatch => {
+  let res
+  try {
+    console.log('AUTH1---->', username)
+    console.log('AUTH2---->', email)
+    console.log('AUTH3---->', password)
+    console.log('AUTH4---->', method.value)
+    res = await axios.post(`/auth/${method}`, {
+      name: username,
+      email: email,
+      password: password,
+      type: 'User',
+      address: '',
+      phone: ''
+    })
+  } catch (authError) {
+    return dispatch(getUser({error: authError}))
+  }
+
+  try {
+    dispatch(getUser(res.data))
+    history.push('/')
   } catch (dispatchOrHistoryErr) {
     console.error(dispatchOrHistoryErr)
   }
@@ -51,6 +83,26 @@ export const logout = () => async dispatch => {
     await axios.post('/auth/logout')
     dispatch(removeUser())
     history.push('/login')
+  } catch (err) {
+    console.error(err)
+  }
+}
+
+export const updateAddressInfo = (userId, address) => async dispatch => {
+  try {
+    const res = await axios.put(`/api/users/${userId}`, {address: address})
+    dispatch(getUser(res.data || defaultUser))
+  } catch (err) {
+    console.error(err)
+  }
+}
+
+export const updatePhoneInfo = (userId, phone) => async dispatch => {
+  try {
+    console.log('REDUX1----->', userId)
+    console.log('REDUX2----->', phone)
+    const res = await axios.put(`/api/users/${userId}`, {phone: phone})
+    dispatch(getUser(res.data || defaultUser))
   } catch (err) {
     console.error(err)
   }
