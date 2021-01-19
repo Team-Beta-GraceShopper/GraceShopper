@@ -2,9 +2,17 @@ const Sequelize = require('sequelize')
 const db = require('../db')
 
 const Order = db.define('order', {
-  orderUserId: {
-    type: Sequelize.INTEGER,
+  name: {
+    type: Sequelize.STRING,
     allowNull: false
+  },
+  email: {
+    type: Sequelize.STRING,
+    unique: true,
+    allowNull: false,
+    validate: {
+      isEmail: true
+    }
   },
   orderTotal: {
     type: Sequelize.INTEGER,
@@ -16,6 +24,16 @@ const Order = db.define('order', {
     type: Sequelize.STRING,
     allowNull: false
   }
+
+  //   myArrayField: {
+  //     type: DataTypes.STRING,
+  //     get: function() {
+  //         return JSON.parse(this.getDataValue('myArrayField'));
+  //     },
+  //     set: function(val) {
+  //         return this.setDataValue('myArrayField', JSON.stringify(val));
+  //     }
+  // }
 })
 
 module.exports = Order
