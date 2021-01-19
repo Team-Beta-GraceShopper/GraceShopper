@@ -568,6 +568,32 @@ function (_Component) {
       this.setState(_defineProperty({}, e.target.name, e.target.value));
     }
   }, {
+    key: "emailValidator",
+    value: function emailValidator(e) {
+      var formEmail = e.target.email.value;
+      var emailTemplate = /\S+@\S+\.\S+/;
+
+      if (formEmail.match(emailTemplate)) {
+        return true;
+      } else {
+        alert('User email is Invalid!');
+        return false;
+      }
+    }
+  }, {
+    key: "addressValidator",
+    value: function addressValidator(e) {
+      var formAddress = e.target.address.value;
+      var allowedLetters = /^[0-9a-zA-Z]+$/;
+
+      if (formAddress.match(allowedLetters)) {
+        return true;
+      } else {
+        alert('User address must have alphanumeric characters only');
+        return false;
+      }
+    }
+  }, {
     key: "createOrder",
     value: function () {
       var _createOrder = _asyncToGenerator(
@@ -724,8 +750,8 @@ function (_Component) {
     value: function componentDidMount() {
       this.props.clearOrder();
       this.props.clearCart();
-      localStorage.clear("cartItems");
-      localStorage.clear("total");
+      localStorage.clear('cartItems');
+      localStorage.clear('total');
     }
   }, {
     key: "render",
@@ -1100,22 +1126,51 @@ function (_Component) {
     _this = _possibleConstructorReturn(this, _getPrototypeOf(UserHome).call(this));
     _this.handleSubmitAddress = _this.handleSubmitAddress.bind(_assertThisInitialized(_this));
     _this.handleSubmitPhone = _this.handleSubmitPhone.bind(_assertThisInitialized(_this));
+    _this.phonenumberVal = _this.phonenumberVal.bind(_assertThisInitialized(_this));
+    _this.addressValidator = _this.addressValidator.bind(_assertThisInitialized(_this));
     return _this;
   }
 
   _createClass(UserHome, [{
-    key: "componentDidMount",
-    value: function componentDidMount() {}
-  }, {
     key: "handleSubmitAddress",
     value: function handleSubmitAddress(evt) {
       evt.preventDefault();
+      this.addressValidator(evt);
       this.props.updateAddressInfo(this.props.id, evt.target.address.value);
+    }
+  }, {
+    key: "addressValidator",
+    value: function addressValidator(evt) {
+      var formAddress = evt.target.address.value;
+      var allowedLetters = /^[0-9a-zA-Z]+$/;
+
+      if (formAddress.match(allowedLetters)) {
+        return true;
+      } else {
+        alert('User address must have alphanumeric characters only');
+        return false;
+      }
+    }
+  }, {
+    key: "phonenumberVal",
+    value: function phonenumberVal(evt) {
+      var formNumber = evt.target.phone.value;
+      console.log('formNumber', formNumber);
+      var phoneTemplate = /^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/;
+
+      if (formNumber.match(phoneTemplate)) {
+        return true;
+      } else {
+        alert('Please enter valid phone number like ### ### ####');
+        return false;
+      }
     }
   }, {
     key: "handleSubmitPhone",
     value: function handleSubmitPhone(evt) {
       evt.preventDefault();
+      console.log('event', evt);
+      this.phonenumberVal(evt);
       this.props.updatePhoneInfo(this.props.id, evt.target.phone.value);
     }
   }, {
@@ -45918,7 +45973,7 @@ function warning(message) {
 /*!***************************************************************!*\
   !*** ./node_modules/react-router-dom/esm/react-router-dom.js ***!
   \***************************************************************/
-/*! exports provided: MemoryRouter, Prompt, Redirect, Route, Router, StaticRouter, Switch, generatePath, matchPath, withRouter, __RouterContext, BrowserRouter, HashRouter, Link, NavLink */
+/*! exports provided: BrowserRouter, HashRouter, Link, NavLink, MemoryRouter, Prompt, Redirect, Route, Router, StaticRouter, Switch, generatePath, matchPath, withRouter, __RouterContext */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
