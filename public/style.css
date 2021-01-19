@@ -20,6 +20,14 @@ form div {
   display: inline-block;
 }
 
+ul {
+  list-style: none;
+}
+
+li {
+  padding: 10px;
+}
+
 .content {
   display: flex;
   flex-wrap: wrap;

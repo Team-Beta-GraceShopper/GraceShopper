@@ -1,10 +1,11 @@
 const router = require('express').Router()
 
 const {OrderDetail} = require('../db/models')
+const {Order} = require('../db/models')
 
 router.get('/', async (req, res, next) => {
   try {
-    const order = await OrderDetail.findAll()
+    const order = await OrderDetail.findAll({include: Order})
     res.json(order)
   } catch (error) {
     next(error)
@@ -19,11 +20,24 @@ router.get('/:orderDetailsId', async (req, res, next) => {
     next(error)
   }
 })
-
-router.delete('/:productId', async (req, res, next) => {
+// get all order details associated with a specific order:
+router.get('/orders/:orderId', async (req, res, next) => {
   try {
-    const deletedProduct = await OrderDetail.findByPk(req.params.productId)
-    await deletedProduct.destroy()
+    const orderDetail = await OrderDetail.findAll({
+      where: {orderId: req.params.orderId}
+    })
+    res.json(orderDetail)
+  } catch (error) {
+    next(error)
+  }
+})
+
+router.delete('/:orderDetailsId', async (req, res, next) => {
+  try {
+    const deletedOrderDetail = await OrderDetail.findByPk(
+      req.params.orderDetailsId
+    )
+    await deletedOrderDetail.destroy()
     res.status(204).end()
   } catch (error) {
     next(error)

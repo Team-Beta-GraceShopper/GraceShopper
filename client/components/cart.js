@@ -1,5 +1,6 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
+import {Link} from 'react-router-dom'
 import {addQuantity, subtractQuantity, removeFromCart} from '../store/cart'
 import {createOrderDatabase, clearOrder} from '../store/orders'
 
@@ -9,7 +10,6 @@ class Cart extends Component {
     this.handleAddQuantity = this.handleAddQuantity.bind(this)
     this.handleSubtractQuantity = this.handleSubtractQuantity.bind(this)
     this.removeItem = this.removeItem.bind(this)
-    this.handleCheckout = this.handleCheckout.bind(this)
   }
 
   async handleAddQuantity(id) {
@@ -28,12 +28,6 @@ class Cart extends Component {
     await this.props.removeFromCart(product)
     localStorage.setItem('cartItems', JSON.stringify(this.props.cart))
     localStorage.setItem('total', JSON.stringify(this.props.total))
-  }
-
-  async handleCheckout() {
-    await this.props.createOrder()
-    localStorage.clear('cartItems')
-    localStorage.clear('total')
   }
 
   render() {
@@ -81,14 +75,9 @@ class Cart extends Component {
               </div>
             ))}
             <h2>Total: ${total / 100}</h2>
-            <button
-              type="button"
-              onClick={() => {
-                this.handleCheckout()
-              }}
-            >
-              Checkout
-            </button>
+            <Link to="/checkout">
+              <button type="button">Checkout</button>
+            </Link>
           </div>
         ) : (
           <h3>Nothing is in the cart!</h3>
