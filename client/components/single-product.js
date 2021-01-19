@@ -14,16 +14,13 @@ class SingleProduct extends Component {
   }
 
   async handleClick(product) {
-    console.log('cart object------->', product)
     await this.props.addToCart(product)
-    console.log('cart items---------->', this.props.cart)
-    console.log('cart total---------->', this.props.total)
     localStorage.setItem('cartItems', JSON.stringify(this.props.cart))
     localStorage.setItem('total', JSON.stringify(this.props.total))
   }
 
   render() {
-    console.log('single product props', this.props)
+    // console.log('single product props', this.props)
     const product = this.props.selectedProduct
     const {
       price,

@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-import {createOrderDatabase} from '../store/orders'
+import {createOrderDatabase, clearOrder} from '../store/orders'
 import {connect} from 'react-redux'
 import history from '../history'
 
@@ -35,7 +35,8 @@ class Checkout extends Component {
         cartItems: this.props.cart,
         orderTotal: this.props.total
       }
-      await this.props.createOrder(order)
+      const cartCopy = this.props.cart.slice()
+      await this.props.createOrder(order, cartCopy)
       history.push('/checkoutDetails')
     } catch (error) {
       console.error(error)
@@ -94,14 +95,18 @@ const mapState = state => {
     isLoggedIn: !!state.user.id,
     cart: state.cart.cartItems,
     total: state.cart.total,
-    order: state.orders.order
+    order: state.orders.order,
+    orderDetails: state.orders.orderDetails
   }
 }
 
 const mapDispatch = dispatch => {
   return {
-    createOrder: order => {
-      dispatch(createOrderDatabase(order))
+    createOrder: (order, cart) => {
+      dispatch(createOrderDatabase(order, cart))
+    },
+    clearOrder: () => {
+      dispatch(clearOrder())
     }
   }
 }

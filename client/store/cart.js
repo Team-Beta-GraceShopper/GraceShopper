@@ -10,6 +10,7 @@ const ADD_TO_CART = 'ADD_TO_CART'
 const ADD_QUANTITY = 'ADD_QUANTITY'
 const SUBTRACT_QUANTITY = 'SUBTRACT_QUANTITY'
 const REMOVE_FROM_CART = 'REMOVE_FROM_CART'
+const CLEAR_CART = 'CLEAR_CART'
 /**
  * ACTION CREATORS
  */
@@ -34,31 +35,13 @@ export const removeFromCart = cartItem => ({
   cartItem
 })
 
+export const clearCart = () => ({
+  type: CLEAR_CART
+})
+
 /**
  * THUNK CREATORS
  */
-// id needs to be orderDetails id and not product id:
-export const addQuantityToDatabase = (itemId, quantity) => {
-  return async dispatch => {
-    try {
-      const res = await axios.put(`/api/orderDetails/${itemId}`, quantity)
-      dispatch(addQuantity(res.data))
-    } catch (error) {
-      console.error(error)
-    }
-  }
-}
-
-export const fetchOrderDetails = () => {
-  return async dispatch => {
-    try {
-      const res = await axios.get('/api/orderDetails')
-      dispatch(getOrderDetails(res.data))
-    } catch (error) {
-      console.error(error)
-    }
-  }
-}
 
 /**
  * INITIAL STATE
@@ -75,7 +58,6 @@ export default function(state = initialState, action) {
   switch (action.type) {
     case ADD_TO_CART:
       //check if the action id already exists in the cartItems
-      console.log('state cart items------>', state.cartItems)
       let existedItem = state.cartItems.find(
         item => item.id === action.cartItem.id
       )
@@ -137,6 +119,8 @@ export default function(state = initialState, action) {
         cartItems: updatedCart,
         total: removedTotal
       }
+    case CLEAR_CART:
+      return initialState
 
     default:
       return state

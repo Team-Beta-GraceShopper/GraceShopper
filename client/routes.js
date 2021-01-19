@@ -26,8 +26,7 @@ class Routes extends Component {
   }
 
   render() {
-    const {isLoggedIn, products, selectedProduct, match} = this.props
-    console.log('route props', this.props)
+    const {isLoggedIn, products} = this.props
     return (
       <div>
         <Switch>

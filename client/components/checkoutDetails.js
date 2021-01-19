@@ -1,57 +1,20 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
-import {clearOrder, createOrderDetailsDatabase} from '../store/orders'
+import {clearOrder} from '../store/orders'
+import {clearCart} from '../store/cart'
 
 class CheckoutDetails extends Component {
+  componentDidMount() {
+    this.props.clearOrder()
+    this.props.clearCart()
+    localStorage.clear('cartItems')
+    localStorage.clear('total')
+  }
   render() {
     console.log('checkout details props------>', this.props)
-    const cartItems = this.props.cart
-    const order = this.props.order
-    const {id, name, email, shippingAddress, orderTotal} = this.props.order
     return (
       <div>
-        {!order.id ? (
-          <h3>Nothing to checkout</h3>
-        ) : (
-          <div>
-            <h3>Your order has been placed</h3>
-            <h2>Order</h2>
-            <ul>
-              <li>
-                <div>Name:</div>
-                <div>{name}</div>
-              </li>
-              <li>
-                <div>Email:</div>
-                <div>{email}</div>
-              </li>
-              <li>
-                <div>Address:</div>
-                <div>{shippingAddress}</div>
-              </li>
-              <li>
-                <div>Cart Items:</div>
-                <div>
-                  {cartItems.map(item => {
-                    return (
-                      <div key={item.id}>
-                        {`${item.quantity} x ${item.name}`}
-                        {this.props.createOrderDetails(id, item)}
-                      </div>
-                    )
-                  })}
-                </div>
-              </li>
-              <li>
-                <div>Total</div>
-                <div>${orderTotal / 100}</div>
-              </li>
-            </ul>
-            {/* {this.props.clearOrder()}  */}
-            {/* {localStorage.clear("cartItems")}
-             {localStorage.clear("total")} */}
-          </div>
-        )}
+        <h3>Your order has been placed!</h3>
       </div>
     )
   }
@@ -68,11 +31,11 @@ const mapState = state => {
 
 const mapDispatch = dispatch => {
   return {
-    createOrderDetails: (id, item) => {
-      dispatch(createOrderDetailsDatabase(id, item))
-    },
     clearOrder: () => {
       dispatch(clearOrder())
+    },
+    clearCart: () => {
+      dispatch(clearCart())
     }
   }
 }

@@ -1,10 +1,11 @@
 const router = require('express').Router()
 
 const {OrderDetail} = require('../db/models')
+const {Order} = require('../db/models')
 
 router.get('/', async (req, res, next) => {
   try {
-    const order = await OrderDetail.findAll()
+    const order = await OrderDetail.findAll({include: Order})
     res.json(order)
   } catch (error) {
     next(error)
@@ -14,6 +15,17 @@ router.get('/', async (req, res, next) => {
 router.get('/:orderDetailsId', async (req, res, next) => {
   try {
     const orderDetail = await OrderDetail.findByPk(req.params.orderDetailsId)
+    res.json(orderDetail)
+  } catch (error) {
+    next(error)
+  }
+})
+// get all order details associated with a specific order:
+router.get('/orders/:orderId', async (req, res, next) => {
+  try {
+    const orderDetail = await OrderDetail.findAll({
+      where: {orderId: req.params.orderId}
+    })
     res.json(orderDetail)
   } catch (error) {
     next(error)
