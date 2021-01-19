@@ -23,6 +23,29 @@ class Checkout extends Component {
     })
   }
 
+  emailValidator(e) {
+    const formEmail = e.target.email.value
+    const emailTemplate = /\S+@\S+\.\S+/
+
+    if (formEmail.match(emailTemplate)) {
+      return true
+    } else {
+      alert('User email is Invalid!')
+      return false
+    }
+  }
+
+  addressValidator(e) {
+    const formAddress = e.target.address.value
+    var allowedLetters = /^[0-9a-zA-Z]+$/
+    if (formAddress.match(allowedLetters)) {
+      return true
+    } else {
+      alert('User address must have alphanumeric characters only')
+      return false
+    }
+  }
+
   async createOrder(e) {
     e.preventDefault()
 

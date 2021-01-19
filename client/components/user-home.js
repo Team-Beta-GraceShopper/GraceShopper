@@ -22,9 +22,9 @@ class UserHome extends Component {
   }
 
   addressValidator(evt) {
-    const formAddress = evt.target.phone.value
+    const formAddress = evt.target.address.value
     var allowedLetters = /^[0-9a-zA-Z]+$/
-    if (formAddress.value.match(allowedLetters)) {
+    if (formAddress.match(allowedLetters)) {
       return true
     } else {
       alert('User address must have alphanumeric characters only')
@@ -38,10 +38,10 @@ class UserHome extends Component {
     alert('hello')
 
     const phoneTemplate = /^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/
-    if (formNumber.value.match(phoneTemplate)) {
+    if (formNumber.match(phoneTemplate)) {
       return true
     } else {
-      alert('Please enter valid phone number like')
+      alert('Please enter valid phone number like ### ### ####')
       return false
     }
   }

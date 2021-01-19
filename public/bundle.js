@@ -568,6 +568,32 @@ function (_Component) {
       this.setState(_defineProperty({}, e.target.name, e.target.value));
     }
   }, {
+    key: "emailValidator",
+    value: function emailValidator(e) {
+      var formEmail = e.target.email.value;
+      var emailTemplate = /\S+@\S+\.\S+/;
+
+      if (formEmail.match(emailTemplate)) {
+        return true;
+      } else {
+        alert('User email is Invalid!');
+        return false;
+      }
+    }
+  }, {
+    key: "addressValidator",
+    value: function addressValidator(e) {
+      var formAddress = e.target.address.value;
+      var allowedLetters = /^[0-9a-zA-Z]+$/;
+
+      if (formAddress.match(allowedLetters)) {
+        return true;
+      } else {
+        alert('User address must have alphanumeric characters only');
+        return false;
+      }
+    }
+  }, {
     key: "createOrder",
     value: function () {
       var _createOrder = _asyncToGenerator(
@@ -1115,10 +1141,10 @@ function (_Component) {
   }, {
     key: "addressValidator",
     value: function addressValidator(evt) {
-      var formAddress = evt.target.phone.value;
+      var formAddress = evt.target.address.value;
       var allowedLetters = /^[0-9a-zA-Z]+$/;
 
-      if (formAddress.value.match(allowedLetters)) {
+      if (formAddress.match(allowedLetters)) {
         return true;
       } else {
         alert('User address must have alphanumeric characters only');
@@ -1133,10 +1159,10 @@ function (_Component) {
       alert('hello');
       var phoneTemplate = /^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/;
 
-      if (formNumber.value.match(phoneTemplate)) {
+      if (formNumber.match(phoneTemplate)) {
         return true;
       } else {
-        alert('Please enter valid phone number like');
+        alert('Please enter valid phone number like ### ### ####');
         return false;
       }
     }
