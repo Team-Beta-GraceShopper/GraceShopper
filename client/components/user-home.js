@@ -1,18 +1,66 @@
-import React from 'react'
+import React, {Component} from 'react'
 import PropTypes from 'prop-types'
 import {connect} from 'react-redux'
+import {updateAddressInfo, updatePhoneInfo} from '../store/user'
 
 /**
  * COMPONENT
  */
-export const UserHome = props => {
-  const {email} = props
+class UserHome extends Component {
+  constructor() {
+    super()
+    this.handleSubmitAddress = this.handleSubmitAddress.bind(this)
+    this.handleSubmitPhone = this.handleSubmitPhone.bind(this)
+  }
 
-  return (
-    <div>
-      <h3>Welcome, {email}</h3>
-    </div>
-  )
+  componentDidMount() {}
+
+  handleSubmitAddress(evt) {
+    evt.preventDefault()
+    this.props.updateAddressInfo(this.props.id, evt.target.address.value)
+  }
+
+  handleSubmitPhone(evt) {
+    evt.preventDefault()
+    this.props.updatePhoneInfo(this.props.id, evt.target.phone.value)
+  }
+  render() {
+    const {id, name, email, address, phone} = this.props
+    return (
+      <div>
+        <h3>Welcome, {name}</h3>
+        <h4>My Info</h4>
+        <h5>Email: {email}</h5>
+
+        <div>
+          <h5>Address: {address}</h5>
+          <form onSubmit={this.handleSubmitAddress}>
+            <label htmlFor="email">
+              <small>New Address</small>
+            </label>
+            <input name="address" type="text" />
+            <button type="submit">Edit</button>
+          </form>
+        </div>
+
+        <div>
+          <h5>
+            Phone: ({phone.slice(0, 3)})-{phone.slice(3, 6)}-{phone.slice(
+              6,
+              10
+            )}
+          </h5>
+          <form onSubmit={this.handleSubmitPhone}>
+            <label htmlFor="email">
+              <small>New Phone Number</small>
+            </label>
+            <input name="phone" type="text" />
+            <button type="submit">Edit</button>
+          </form>
+        </div>
+      </div>
+    )
+  }
 }
 
 /**
@@ -20,11 +68,26 @@ export const UserHome = props => {
  */
 const mapState = state => {
   return {
-    email: state.user.email
+    id: state.user.id,
+    name: state.user.name,
+    email: state.user.email,
+    address: state.user.address,
+    phone: state.user.phone
   }
 }
 
-export default connect(mapState)(UserHome)
+const mapDispatch = dispatch => {
+  return {
+    updateAddressInfo(userId, address) {
+      dispatch(updateAddressInfo(userId, address))
+    },
+    updatePhoneInfo(userId, phone) {
+      dispatch(updatePhoneInfo(userId, phone))
+    }
+  }
+}
+
+export default connect(mapState, mapDispatch)(UserHome)
 
 /**
  * PROP TYPES
