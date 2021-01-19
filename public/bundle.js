@@ -509,8 +509,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _store_orders__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../store/orders */ "./client/store/orders.js");
-/* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
-/* harmony import */ var _history__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../history */ "./client/history.js");
+/* harmony import */ var _store_user__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../store/user */ "./client/store/user.js");
+/* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
+/* harmony import */ var _history__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../history */ "./client/history.js");
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
@@ -534,6 +535,7 @@ function _assertThisInitialized(self) { if (self === void 0) { throw new Referen
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
 
 function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
 
 
 
@@ -573,15 +575,23 @@ function (_Component) {
       var _createOrder = _asyncToGenerator(
       /*#__PURE__*/
       regeneratorRuntime.mark(function _callee(e) {
-        var order, cartCopy;
+        var specificUser, order, cartCopy;
         return regeneratorRuntime.wrap(function _callee$(_context) {
           while (1) {
             switch (_context.prev = _context.next) {
               case 0:
                 e.preventDefault();
                 _context.prev = 1;
+
+                if (this.props.user) {
+                  specificUser = this.props.user;
+                } else {
+                  specificUser = 1;
+                }
+
                 order = {
                   // userId: this.state.user.id,
+                  userId: specificUser,
                   name: this.state.name,
                   email: this.state.email,
                   shippingAddress: this.state.shippingAddress,
@@ -589,25 +599,25 @@ function (_Component) {
                   orderTotal: this.props.total
                 };
                 cartCopy = this.props.cart.slice();
-                _context.next = 6;
+                _context.next = 7;
                 return this.props.createOrder(order, cartCopy);
 
-              case 6:
-                _history__WEBPACK_IMPORTED_MODULE_3__["default"].push('/checkoutDetails');
-                _context.next = 12;
+              case 7:
+                _history__WEBPACK_IMPORTED_MODULE_4__["default"].push('/checkoutDetails');
+                _context.next = 13;
                 break;
 
-              case 9:
-                _context.prev = 9;
+              case 10:
+                _context.prev = 10;
                 _context.t0 = _context["catch"](1);
                 console.error(_context.t0);
 
-              case 12:
+              case 13:
               case "end":
                 return _context.stop();
             }
           }
-        }, _callee, this, [[1, 9]]);
+        }, _callee, this, [[1, 10]]);
       }));
 
       function createOrder(_x) {
@@ -619,7 +629,6 @@ function (_Component) {
   }, {
     key: "render",
     value: function render() {
-      // console.log('checkout form props', this.props)
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2", null, "Checkout Information"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("form", {
         onSubmit: this.createOrder
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", null, "Name"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
@@ -648,7 +657,7 @@ function (_Component) {
 
 var mapState = function mapState(state) {
   return {
-    isLoggedIn: !!state.user.id,
+    user: state.user.id,
     cart: state.cart.cartItems,
     total: state.cart.total,
     order: state.orders.order,
@@ -663,11 +672,14 @@ var mapDispatch = function mapDispatch(dispatch) {
     },
     clearOrder: function clearOrder() {
       dispatch(Object(_store_orders__WEBPACK_IMPORTED_MODULE_1__["clearOrder"])());
+    },
+    me: function me() {
+      dispatch(Object(_store_user__WEBPACK_IMPORTED_MODULE_2__["me"])());
     }
   };
 };
 
-/* harmony default export */ __webpack_exports__["default"] = (Object(react_redux__WEBPACK_IMPORTED_MODULE_2__["connect"])(mapState, mapDispatch)(Checkout));
+/* harmony default export */ __webpack_exports__["default"] = (Object(react_redux__WEBPACK_IMPORTED_MODULE_3__["connect"])(mapState, mapDispatch)(Checkout));
 
 /***/ }),
 
@@ -724,8 +736,8 @@ function (_Component) {
     value: function componentDidMount() {
       this.props.clearOrder();
       this.props.clearCart();
-      localStorage.clear("cartItems");
-      localStorage.clear("total");
+      localStorage.clear('cartItems');
+      localStorage.clear('total');
     }
   }, {
     key: "render",

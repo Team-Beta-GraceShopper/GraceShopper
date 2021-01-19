@@ -8,7 +8,7 @@ const Order = db.define('order', {
   },
   email: {
     type: Sequelize.STRING,
-    unique: true,
+    // unique: false,
     allowNull: false,
     validate: {
       isEmail: true
