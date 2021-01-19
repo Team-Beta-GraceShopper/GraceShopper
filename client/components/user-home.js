@@ -11,17 +11,45 @@ class UserHome extends Component {
     super()
     this.handleSubmitAddress = this.handleSubmitAddress.bind(this)
     this.handleSubmitPhone = this.handleSubmitPhone.bind(this)
+    this.phonenumberVal = this.phonenumberVal.bind(this)
+    this.addressValidator = this.addressValidator.bind(this)
   }
-
-  componentDidMount() {}
 
   handleSubmitAddress(evt) {
     evt.preventDefault()
+    this.addressValidator(evt)
     this.props.updateAddressInfo(this.props.id, evt.target.address.value)
+  }
+
+  addressValidator(evt) {
+    const formAddress = evt.target.phone.value
+    var allowedLetters = /^[0-9a-zA-Z]+$/
+    if (formAddress.value.match(allowedLetters)) {
+      return true
+    } else {
+      alert('User address must have alphanumeric characters only')
+      return false
+    }
+  }
+
+  phonenumberVal(evt) {
+    const formNumber = evt.target.phone.value
+    console.log('formNumber', formNumber)
+    alert('hello')
+
+    const phoneTemplate = /^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/
+    if (formNumber.value.match(phoneTemplate)) {
+      return true
+    } else {
+      alert('Please enter valid phone number like')
+      return false
+    }
   }
 
   handleSubmitPhone(evt) {
     evt.preventDefault()
+    console.log('event', evt)
+    this.phonenumberVal(evt)
     this.props.updatePhoneInfo(this.props.id, evt.target.phone.value)
   }
   render() {
@@ -45,10 +73,8 @@ class UserHome extends Component {
 
         <div>
           <h5>
-            Phone: ({phone.slice(0, 3)})-{phone.slice(3, 6)}-{phone.slice(
-              6,
-              10
-            )}
+            Phone: ({phone.slice(0, 3)})-{phone.slice(3, 6)}-
+            {phone.slice(6, 10)}
           </h5>
           <form onSubmit={this.handleSubmitPhone}>
             <label htmlFor="email">

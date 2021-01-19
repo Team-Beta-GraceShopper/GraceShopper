@@ -2,6 +2,11 @@ const router = require('express').Router()
 
 const {Product} = require('../db/models')
 
+const isAdmin = (req, res, next) =>
+  req.user.type === 'Admin'
+    ? next()
+    : res.send('Only Admins are allowed to alter Product Data!')
+
 router.get('/', async (req, res, next) => {
   try {
     const products = await Product.findAll()
@@ -20,7 +25,7 @@ router.get('/:productId', async (req, res, next) => {
   }
 })
 
-router.delete('/:productId', async (req, res, next) => {
+router.delete('/:productId', isAdmin, async (req, res, next) => {
   try {
     const deletedProduct = await Product.findByPk(req.params.productId)
     await deletedProduct.destroy()
@@ -30,7 +35,7 @@ router.delete('/:productId', async (req, res, next) => {
   }
 })
 
-router.put('/:productId', async (req, res, next) => {
+router.put('/:productId', isAdmin, async (req, res, next) => {
   try {
     const updatedProduct = await Product.findByPk(req.params.productId)
     await updatedProduct.update(req.body)
@@ -40,7 +45,7 @@ router.put('/:productId', async (req, res, next) => {
   }
 })
 
-router.post('/', async (req, res, next) => {
+router.post('/', isAdmin, async (req, res, next) => {
   try {
     const createdProduct = await Product.create(req.body)
     // destructure req.body to pass only what is REQUIRED into database
