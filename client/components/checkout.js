@@ -15,6 +15,8 @@ class Checkout extends Component {
     this.state = defaultState
     this.handleInput = this.handleInput.bind(this)
     this.createOrder = this.createOrder.bind(this)
+    this.phonenumberVal = this.phonenumberVal.bind(this)
+    this.addressValidator = this.addressValidator.bind(this)
   }
 
   handleInput(e) {

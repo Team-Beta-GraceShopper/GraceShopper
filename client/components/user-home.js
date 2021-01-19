@@ -35,8 +35,6 @@ class UserHome extends Component {
   phonenumberVal(evt) {
     const formNumber = evt.target.phone.value
     console.log('formNumber', formNumber)
-    alert('hello')
-
     const phoneTemplate = /^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/
     if (formNumber.match(phoneTemplate)) {
       return true
