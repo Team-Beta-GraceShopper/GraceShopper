@@ -36,18 +36,11 @@ class SingleProduct extends Component {
         </div>
         <div id="product-details">
           <h2>{name}</h2>
-          <h4>Price: ${price / 100}</h4>
+          <h4>Price: ${price / 100}.00</h4>
           {inStock ? <h4>In Stock</h4> : <h4>Out of Stock</h4>}
         </div>
         <div id="product-description">
           <h4>Description: {description}</h4>
-        </div>
-        <div id="size-dropdown-list">
-          <select>
-            <option>Small</option>
-            <option>Medium</option>
-            <option>Large</option>
-          </select>
         </div>
         <div>
           <button
