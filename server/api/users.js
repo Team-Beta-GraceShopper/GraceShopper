@@ -2,10 +2,25 @@ const router = require('express').Router()
 const {User} = require('../db/models')
 module.exports = router
 
-const isAdmin = (req, res, next) =>
-  req.user.type === 'Admin'
-    ? next()
-    : res.send('Only Admins are allowed to alter User Data!')
+const isAdmin = (req, res, next) => {
+  if (req.user.type === 'Admin') {
+    next()
+  }
+  const err = new Error('Only Admins are allowed to alter User Data!')
+  err.status = 401
+  return next(err)
+}
+
+const isUser = (req, res, next) => {
+  if (req.params.userId === req.user.id) {
+    next()
+  }
+  const err = new Error(
+    'Users can only access data associated with their account'
+  )
+  err.status = 401
+  return next(err)
+}
 
 router.get('/', isAdmin, async (req, res, next) => {
   try {
@@ -20,8 +35,10 @@ router.get('/', isAdmin, async (req, res, next) => {
     next(err)
   }
 })
-
-router.get('/:userId', isAdmin, async (req, res, next) => {
+// is admin or self
+//req.userId === req.user.id
+//then next()
+router.get('/:userId', isUser, async (req, res, next) => {
   try {
     const user = await User.findByPk(req.params.userId)
     res.json(user)
@@ -30,7 +47,7 @@ router.get('/:userId', isAdmin, async (req, res, next) => {
   }
 })
 
-router.put('/:userId', isAdmin, async (req, res, next) => {
+router.put('/:userId', isUser, async (req, res, next) => {
   try {
     const updatedUser = await User.findByPk(req.params.userId)
     await updatedUser.update(req.body)
