@@ -11,7 +11,7 @@ const isAdmin = (req, res, next) => {
   return next(err)
 }
 
-router.get('/', isAdmin, async (req, res, next) => {
+router.get('/', async (req, res, next) => {
   try {
     const products = await Product.findAll()
     res.json(products)
@@ -20,7 +20,7 @@ router.get('/', isAdmin, async (req, res, next) => {
   }
 })
 
-router.get('/:productId', isAdmin, async (req, res, next) => {
+router.get('/:productId', async (req, res, next) => {
   try {
     const product = await Product.findByPk(req.params.productId)
     res.json(product)
