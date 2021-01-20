@@ -57,7 +57,6 @@ const initialState = {
 export default function(state = initialState, action) {
   switch (action.type) {
     case ADD_TO_CART:
-      //check if the action id already exists in the cartItems
       let existedItem = state.cartItems.find(
         item => item.id === action.cartItem.id
       )
@@ -69,7 +68,6 @@ export default function(state = initialState, action) {
         }
       } else {
         action.cartItem.quantity = 1
-        //calculating the total
         let newTotal = state.total + action.cartItem.price
         return {
           ...state,

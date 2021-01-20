@@ -44,34 +44,3 @@ router.post('/', async (req, res, next) => {
 })
 
 module.exports = router
-
-// router.get('/:orderDetailsId', async (req, res, next) => {
-//   try {
-//     const orderDetail = await OrderDetail.findByPk(req.params.orderDetailsId)
-//     res.json(orderDetail)
-//   } catch (error) {
-//     next(error)
-//   }
-// })
-
-// router.delete('/:productId', async (req, res, next) => {
-//   try {
-//     const deletedProduct = await OrderDetail.findByPk(req.params.productId)
-//     await deletedProduct.destroy()
-//     res.status(204).end()
-//   } catch (error) {
-//     next(error)
-//   }
-// })
-
-// router.put('/:orderDetailsId', async (req, res, next) => {
-//   try {
-//     const updatedOrderDetail = await OrderDetail.findByPk(
-//       req.params.orderDetailsId
-//     )
-//     await updatedOrderDetail.update(req.body)
-//     res.json(updatedOrderDetail)
-//   } catch (error) {
-//     next(error)
-//   }
-// })

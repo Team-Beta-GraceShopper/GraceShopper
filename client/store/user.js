@@ -54,10 +54,6 @@ export const authSignUp = (
 ) => async dispatch => {
   let res
   try {
-    console.log('AUTH1---->', username)
-    console.log('AUTH2---->', email)
-    console.log('AUTH3---->', password)
-    console.log('AUTH4---->', method.value)
     res = await axios.post(`/auth/${method}`, {
       name: username,
       email: email,
@@ -99,8 +95,6 @@ export const updateAddressInfo = (userId, address) => async dispatch => {
 
 export const updatePhoneInfo = (userId, phone) => async dispatch => {
   try {
-    console.log('REDUX1----->', userId)
-    console.log('REDUX2----->', phone)
     const res = await axios.put(`/api/users/${userId}`, {phone: phone})
     dispatch(getUser(res.data || defaultUser))
   } catch (err) {

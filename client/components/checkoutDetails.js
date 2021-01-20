@@ -11,7 +11,6 @@ class CheckoutDetails extends Component {
     localStorage.clear('total')
   }
   render() {
-    console.log('checkout details props------>', this.props)
     return (
       <div>
         <h3>Your order has been placed!</h3>

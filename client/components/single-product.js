@@ -20,7 +20,6 @@ class SingleProduct extends Component {
   }
 
   render() {
-    // console.log('single product props', this.props)
     const product = this.props.selectedProduct
     const {
       price,
@@ -59,8 +58,6 @@ class SingleProduct extends Component {
 
 const mapState = state => {
   return {
-    // Being 'logged in' for our purposes will be defined has having a state.user that has a truthy id.
-    // Otherwise, state.user will be an empty object, and state.user.id will be falsey
     isLoggedIn: !!state.user.id,
     selectedProduct: state.products.selectedProduct,
     cart: state.cart.cartItems,
