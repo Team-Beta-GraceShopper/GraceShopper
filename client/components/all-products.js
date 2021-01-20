@@ -19,7 +19,7 @@ const AllProducts = props => {
                     <h1>{product.name}</h1>
                   </Link>
                   <img src={product.imageUrl} alt={product.name} />
-                  <h3>${product.price / 100}</h3>
+                  <h3>${product.price / 100}.00</h3>
                 </div>
               </li>
             )

@@ -41,10 +41,10 @@ class Cart extends Component {
             {cart.map(item => (
               <div key={item.id}>
                 <h2>{item.name}</h2>
-                <p>Price: ${item.price / 100}</p>
+                <p>Price: ${item.price / 100}.00</p>
                 <p>Quantity: {item.quantity}</p>
                 <div id="quantity">
-                  <h4>update quantity:</h4>
+                  <h4>Update Quantity:</h4>
                   <button
                     type="button"
                     onClick={() => {
@@ -74,7 +74,7 @@ class Cart extends Component {
                 </div>
               </div>
             ))}
-            <h2>Total: ${total / 100}</h2>
+            <h2>Total: ${total / 100}.00</h2>
             <Link to="/checkout">
               <button type="button">Checkout</button>
             </Link>
