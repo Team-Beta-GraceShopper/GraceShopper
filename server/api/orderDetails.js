@@ -29,7 +29,7 @@ router.get('/:orderDetailsId', isAdmin, async (req, res, next) => {
     next(error)
   }
 })
-// get all order details associated with a specific order:
+
 router.get('/orders/:orderId', isAdmin, async (req, res, next) => {
   try {
     const orderDetail = await OrderDetail.findAll({

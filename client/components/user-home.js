@@ -34,7 +34,6 @@ class UserHome extends Component {
 
   phonenumberVal(evt) {
     const formNumber = evt.target.phone.value
-    console.log('formNumber', formNumber)
     const phoneTemplate = /^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/
     if (formNumber.match(phoneTemplate)) {
       return true
@@ -46,7 +45,6 @@ class UserHome extends Component {
 
   handleSubmitPhone(evt) {
     evt.preventDefault()
-    console.log('event', evt)
     this.phonenumberVal(evt)
     this.props.updatePhoneInfo(this.props.id, evt.target.phone.value)
   }

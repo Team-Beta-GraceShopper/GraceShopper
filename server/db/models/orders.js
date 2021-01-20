@@ -24,16 +24,6 @@ const Order = db.define('order', {
     type: Sequelize.STRING,
     allowNull: false
   }
-
-  //   myArrayField: {
-  //     type: DataTypes.STRING,
-  //     get: function() {
-  //         return JSON.parse(this.getDataValue('myArrayField'));
-  //     },
-  //     set: function(val) {
-  //         return this.setDataValue('myArrayField', JSON.stringify(val));
-  //     }
-  // }
 })
 
 module.exports = Order

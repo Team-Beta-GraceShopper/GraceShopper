@@ -3,7 +3,6 @@ import {Link} from 'react-router-dom'
 // import {connect} from 'react-redux'
 
 const AllProducts = props => {
-  console.log('all product props', props)
   const products = props.products
 
   return (

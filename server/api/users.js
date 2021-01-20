@@ -35,9 +35,7 @@ router.get('/', isAdmin, async (req, res, next) => {
     next(err)
   }
 })
-// is admin or self
-//req.userId === req.user.id
-//then next()
+
 router.get('/:userId', isUser, async (req, res, next) => {
   try {
     const user = await User.findByPk(req.params.userId)
