@@ -61,7 +61,7 @@ router.put('/:orderDetailsId', isAdmin, async (req, res, next) => {
   }
 })
 
-router.post('/', isAdmin, async (req, res, next) => {
+router.post('/', async (req, res, next) => {
   try {
     const createdOrderDetail = await OrderDetail.create(req.body)
     // destructure req.body to pass only what is REQUIRED into database
