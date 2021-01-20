@@ -8,7 +8,7 @@ const Product = db.define('product', {
     allowNull: false
   },
   category: {
-    type: Sequelize.ENUM('sweater', 'dress'),
+    type: Sequelize.STRING,
     allowNull: false
   },
   price: {
@@ -35,10 +35,6 @@ const Product = db.define('product', {
   },
   description: {
     type: Sequelize.TEXT,
-    allowNull: false
-  },
-  size: {
-    type: Sequelize.ENUM('xsmall', 'small', 'medium', 'large', 'xlarge'),
     allowNull: false
   }
 })
