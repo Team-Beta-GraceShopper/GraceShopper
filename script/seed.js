@@ -131,7 +131,7 @@ const users = [
     name: 'Customer',
     email: 'customer999@gmail.com',
     password: 'Q1w2E3r5T6y7U8i9O0',
-    type: 'Admin',
+    type: 'user',
     address: '',
     phone: ''
   },
