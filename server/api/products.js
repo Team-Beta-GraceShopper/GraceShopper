@@ -2,10 +2,14 @@ const router = require('express').Router()
 
 const {Product} = require('../db/models')
 
-const isAdmin = (req, res, next) =>
-  req.user.type === 'Admin'
-    ? next()
-    : res.send('Only Admins are allowed to alter Product Data!')
+const isAdmin = (req, res, next) => {
+  if (req.user.type === 'Admin') {
+    next()
+  }
+  const err = new Error('Only Admins are allowed to alter User Data!')
+  err.status = 401
+  return next(err)
+}
 
 router.get('/', async (req, res, next) => {
   try {
